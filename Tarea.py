@@ -15,10 +15,14 @@ codigo_html='''
         <title>Pagina generada por python</title>
         <body>
             <p>Esta pagina contiene un mensaje secreto</p>
-            <div class="DES" id= "%cifrado%"> Texto</div>
+            <div class="key" id= "%key%"> Texto key</div>
+            <div class="DES" id= "%cifrado%"> Texto des</div>
+            <div class="iv" id= "%iv%"> Texto iv </div>
         </body>
     </html>
         '''
+codigo_html=codigo_html.replace("%key%",key.hex())
+codigo_html=codigo_html.replace("%iv%",cipher.iv.hex())
 codigo_html=codigo_html.replace("%cifrado%",msg.hex())
 html.write(codigo_html.encode("utf-8"))
 
