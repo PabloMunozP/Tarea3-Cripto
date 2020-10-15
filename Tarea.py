@@ -1,13 +1,25 @@
 from Crypto.Cipher import DES
-key = b'Secretos'
-cipher = DES.new(key, DES.MODE_CFB)
-plaintext = b'Texto plano'
-msg = cipher.iv + cipher.encrypt(plaintext)
 
-print(msg.hex())
+key = 'Secretos'#El tamaño maximo debe ser de 8bytes
+plaintext = 'Texto plano'
+iv= 'IVsecret'#El tamaño maximo debe ser de 8bytes
 
-html=open("index.html","wb")
-codigo_html='''
+bkey=bytes(key,'utf8')
+biv= bytes(iv,'utf8')
+bplain=bytes(plaintext,'utf8')
+
+cipher = DES.new(bkey, DES.MODE_CFB,biv)
+
+msg =  cipher.encrypt(bplain)
+
+cipher2=DES.new(bkey, DES.MODE_CFB,biv)
+msg2=cipher2.decrypt(msg)
+
+
+print(msg,bkey.hex(),biv.hex())
+print(msg2)
+html=open("index.html","w")
+html.write('''
     <!DOCTYPE html>
 
     <html>
@@ -15,15 +27,12 @@ codigo_html='''
         <title>Pagina generada por python</title>
         <body>
             <p>Esta pagina contiene un mensaje secreto</p>
-            <div class="key" id= "%key%"> Texto key</div>
-            <div class="DES" id= "%cifrado%"> Texto des</div>
-            <div class="iv" id= "%iv%"> Texto iv </div>
+            <div class="key" id= "%s"> Texto key</div>
+            <div class="DES" id= "%s"> Texto des</div>
+            <div class="iv" id= "%s"> Texto iv </div>
         </body>
     </html>
-        '''
-codigo_html=codigo_html.replace("%key%",key.hex())
-codigo_html=codigo_html.replace("%iv%",cipher.iv.hex())
-codigo_html=codigo_html.replace("%cifrado%",msg.hex())
-html.write(codigo_html.encode("utf-8"))
+        '''% (bkey.hex(),msg.hex(),biv.hex()))
 
 html.close()
+
