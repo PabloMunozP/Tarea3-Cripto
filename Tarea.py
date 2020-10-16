@@ -1,5 +1,5 @@
 from Crypto.Cipher import DES
-import codecs 
+from base64 import b64encode
 
 key = 'Secretos'#El tamaño maximo debe ser de 8bytes
 plaintext = 'Texto plano'
@@ -9,15 +9,13 @@ bkey=bytes(key,'utf8')
 biv= bytes(iv,'utf8')
 bplain=bytes(plaintext,'utf8')
 
-cipher = DES.new(bkey, DES.MODE_CFB)
-iv=cipher.iv
+cipher = DES.new(bkey, DES.MODE_CFB,biv)
 msg = cipher.encrypt(bplain)
-cipher2=DES.new(bkey, DES.MODE_CFB,iv)
-msg2=cipher2.decrypt(msg)
+msg=b64encode(msg).decode('utf-8')
+biv=b64encode(biv).decode('utf-8')
+bkey=b64encode(bkey).decode('utf-8')
 
-
-print(msg.hex(),bkey.hex(),iv.hex())
-print(msg2)
+print(msg,bkey,biv)
 html=open("index.html","w")
 html.write('''
     <!DOCTYPE html>
@@ -32,7 +30,7 @@ html.write('''
             <div class="iv" id= "%s"> Texto iv </div>
         </body>
     </html>
-        '''% (bkey.hex(),msg.hex(),iv.hex()))
+        '''% (bkey,msg,biv))
 
 html.close()
 
