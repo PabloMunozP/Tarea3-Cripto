@@ -23,8 +23,7 @@ window.addEventListener('load', function(){
     msg=forge.util.createBuffer(msg);
     decipher.start({iv: iv});
     decipher.update(msg);
-    var result = decipher.finish(); // check 'result' for true/false
-    // outputs decrypted hex
+    var result = decipher.finish(); 
     decipher=decipher.output;
     console.log(decipher.toHex());
 });
