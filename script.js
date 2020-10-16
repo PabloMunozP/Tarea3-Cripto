@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tarea3
 // @namespace    none
-// @version      0.2
+// @version      1.1
 // @description  try to take over the world!
 // @author       Pablo Munoz P.
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js
