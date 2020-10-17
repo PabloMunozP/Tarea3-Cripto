@@ -17,9 +17,7 @@ bkey=b64encode(bkey).decode('utf-8')
 
 print(msg,bkey,biv)
 html=open("index.html","w")
-html.write('''
-    <!DOCTYPE html>
-
+html.write('''<!DOCTYPE html>
     <html>
         <head></head>
         <title>Pagina generada por python</title>
